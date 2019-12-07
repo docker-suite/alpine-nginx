@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# set -e : Exit the script if any statement returns a non-true return value.
+# set -u : Exit the script when using uninitialised variable.
+set -eu
+
+# Add libraries
+source /usr/local/lib/bash-logger.sh
+source /usr/local/lib/persist-env.sh
+
+#
+NOTICE "[NGINX] -- Starting Service nginx ..."
+
+# Redirect STDERR to STDOUT
+exec 2>&1
+
+# envs
+NGINX_DEBUG=${NGINX_DEBUG}
+
+# Let's go and start nginx
+if [ "$NGINX_DEBUG" = "true" ]; then
+    exec nginx-debug
+else
+    exec nginx
+fi
+
+# This exit code will be sent as the first parameter to the finish script
+exit 1
+

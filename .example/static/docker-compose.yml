@@ -1,0 +1,16 @@
+version: '3.7'
+
+services:
+
+    nginx:
+        image: dsuite/alpine-nginx:1.17
+        container_name: nginx
+        environment:
+            - DEBUG_LEVEL=DEBUG
+            - NGINX_ROOT=public
+            - NGINX_DEBUG=true
+        ports:
+            - 8080:80
+        volumes:
+            - ./www:/var/www:ro
+            - ./log:/var/log

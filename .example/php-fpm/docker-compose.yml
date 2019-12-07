@@ -1,0 +1,25 @@
+version: '3.7'
+
+services:
+
+    nginx:
+        image: dsuite/alpine-nginx:1.17
+        container_name: nginx
+        environment:
+            - DEBUG_LEVEL=DEBUG
+            - NGINX_DEBUG=true
+            - PHP_FPM_ENABLE=true
+            - PHP_FPM_HOST=php
+        ports:
+            - 8080:80
+        volumes:
+            - ./www:/var/www:ro
+            - ./log:/var/log
+        depends_on:
+            - php
+
+    php:
+        image: php:7.3-fpm-alpine
+        container_name: php
+        volumes:
+            - ./www:/var/www

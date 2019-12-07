@@ -1,0 +1,58 @@
+FROM nginx:{{NGINX_VERSION}}-alpine
+
+LABEL maintainer="Hexosse <hexosse@gmail.com>" \
+      description="A nginx official docker image built on top of alpine-runit container with runit process supervisor." \
+      vendor="docker-suite" \
+      license="MIT"
+
+
+ENV NGINX_USER=nginx \
+    NGINX_WORKER_PROCESSES=auto \
+    NGINX_WORKER_CONNECTIONS=1024 \
+    NGINX_SERVER_NAME=localhost \
+    NGINX_ROOT= \
+    NGINX_DEBUG=false \
+    PHP_FPM_ENABLE=false \
+    PHP_FPM_HOST=localhost \
+    PHP_FPM_PORT=9000
+
+
+
+## Install runit process supervisor
+RUN \
+	# Print executed commands
+	set -x \
+    # Update repository indexes
+    && apk update \
+    # Download the install script and run it
+    && apk add curl \
+    && curl -s -o /tmp/install-runit.sh https://raw.githubusercontent.com/docker-suite/Install-Scripts/master/alpine-runit/install-runit.sh \
+    && sh /tmp/install-runit.sh \
+    # remove default entrypoint provided by node image
+    && rm -f /usr/local/bin/docker-entrypoint.sh \
+	# Clear apk's cache
+	&& apk-cleanup \
+    # Remove default nginx config files
+    && rm -rf /etc/nginx/conf.d/* \
+    && rm -f /etc/nginx/nginx.conf
+
+
+## Copy scripts
+ADD /rootfs /
+
+
+## entrypoint scripts must be executable
+RUN chmod +x /etc/entrypoint.d/*.sh
+
+
+## Ports
+EXPOSE 80
+EXPOSE 443
+
+
+## Entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
+
+
+## Start runit
+CMD ["start"]

@@ -1,0 +1,14 @@
+group:
+  www-data:
+    exists: true
+    gid: 82
+    skip: false
+
+user:
+  www-data:
+    exists: true
+    uid: 82
+    gid: 82
+    groups:
+    - www-data
+    skip: false
