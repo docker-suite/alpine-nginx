@@ -5,7 +5,7 @@ LABEL maintainer="Hexosse <hexosse@gmail.com>" \
       vendor="docker-suite" \
       license="MIT"
 
-
+## NGINX Config
 ENV NGINX_USER=nginx \
     NGINX_WORKER_PROCESSES=auto \
     NGINX_WORKER_CONNECTIONS=1024 \
@@ -16,7 +16,23 @@ ENV NGINX_USER=nginx \
     PHP_FPM_HOST=localhost \
     PHP_FPM_PORT=9000
 
+## dsuite user
+ENV DST_USER="dsuite" \
+	DST_GROUP="dsuite" \
+	DST_UID="1000" \
+	DST_GID="1000"
 
+## Create dsuite user and group
+RUN \
+	# Print executed commands
+	set -x \
+    # Group
+    && addgroup -S -g "${DST_GID}" "${DST_GROUP}" \
+    # User \
+    && adduser -S -D -u "${DST_UID}" -G "${DST_GROUP}" -s /bin/bash "${DST_USER}" \
+    # Add user to sudoers
+    && echo "${DST_USER} ALL=(ALL) ALL" >> /etc/sudoers \
+    && echo "${DST_USER} ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 ## Install runit process supervisor
 RUN \
@@ -36,23 +52,11 @@ RUN \
     && rm -rf /etc/nginx/conf.d/* \
     && rm -f /etc/nginx/nginx.conf
 
-
 ## Copy scripts
 ADD /rootfs /
 
-
-## entrypoint scripts must be executable
-RUN chmod +x /etc/entrypoint.d/*.sh
-
-
-## Ports
-EXPOSE 80
-EXPOSE 443
-
-
 ## Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]
-
 
 ## Start runit
 CMD ["start"]

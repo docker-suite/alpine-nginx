@@ -4,13 +4,6 @@
 # set -u : Exit the script when using uninitialised variable.
 set -eu
 
-# Add libraries
-source /usr/local/lib/bash-logger.sh
-source /usr/local/lib/persist-env.sh
-
-# Log format
-LOG_RESET
-
 # Generate /etc/nginx/nginx.conf
 if [ ! -f "/etc/nginx/nginx.conf" ]; then
     DEBUG "Generating /etc/nginx/nginx.conf"

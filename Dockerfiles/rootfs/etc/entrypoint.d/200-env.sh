@@ -4,8 +4,6 @@
 # set -u : Exit the script when using uninitialised variable.
 set -eu
 
-# Add libraries
-source /usr/local/lib/bash-logger.sh
-source /usr/local/lib/persist-env.sh
+## NGINX debug mode
+[ -n "$(env_get "NGINX_DEBUG")" ] && env_set "NGINX_DEBUG" "$(env_get "NGINX_DEBUG")" || true
 
-[ -n "$(env_get "NGINX_DEBUG")" ]           && env_set "NGINX_DEBUG" "$(env_get "NGINX_DEBUG")" || true
