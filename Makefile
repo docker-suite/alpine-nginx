@@ -30,7 +30,6 @@ push: ## Push all versions
 shell: ## Run shell ( usage : make shell v="3.10" )
 	$(eval version := $(or $(v),$(latest)))
 	@$(MAKE) build-version v=$(version)
-	@mkdir -p $(DIR)/packages
 	@docker run -it --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \
