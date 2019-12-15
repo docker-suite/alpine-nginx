@@ -20,12 +20,12 @@ build: ## Build all versions
 	@$(MAKE) build-version v=1.17
 
 test: ## Test all versions
-	$(MAKE) test-version v=1.16
-	$(MAKE) test-version v=1.17
+	@$(MAKE) test-version v=1.16
+	@$(MAKE) test-version v=1.17
 
 push: ## Push all versions
-	$(MAKE) push-version v=1.16
-	$(MAKE) push-version v=1.17
+	@$(MAKE) push-version v=1.16
+	@$(MAKE) push-version v=1.17
 
 shell: ## Run shell ( usage : make shell v="3.10" )
 	$(eval version := $(or $(v),$(latest)))
