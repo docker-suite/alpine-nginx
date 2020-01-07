@@ -9,8 +9,6 @@
 
 A nginx official docker image built on top of [docker-suite (dsuite)][docker-suite] [dsuite/alpine-runit][alpine-runit] container with [runit][runit] process supervisor.
 
-This image is built on top of  [dsuite/alpine-base][alpine-base] container and integrate [runit][runit] as a process supervisor.
-
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Environment variables
 
 A full list of [dsuite/alpine-base environment variables][alpine-base-readme-variables] are described in the [alpine-base Readme][alpine-base-readme].
