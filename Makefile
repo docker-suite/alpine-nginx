@@ -11,9 +11,9 @@ latest = 1.17
 .DEFAULT_GOAL := help
 .PHONY: *
 
-help: ## This help!
-	@printf "\033[33mUsage:\033[0m\n  make [target] [arg=\"val\"...]\n\n\033[33mTargets:\033[0m\n"
-	@grep -E '^[-a-zA-Z0-9_\.\/]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2}'
+help: ## Display this help!
+	@printf "\n\033[33mUsage:\033[0m\n  make \033[32m<target>\033[0m \033[36m[\033[0marg=\"val\"...\033[36m]\033[0m\n\n\033[33mTargets:\033[0m\n"
+	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 build: ## Build all versions
 	@$(MAKE) build-version v=1.16
@@ -27,7 +27,7 @@ push: ## Push all versions
 	@$(MAKE) push-version v=1.16
 	@$(MAKE) push-version v=1.17
 
-shell: ## Run shell ( usage : make shell v="3.10" )
+shell: ## Run shell ( usage : make shell v="1.17" )
 	$(eval version := $(or $(v),$(latest)))
 	@$(MAKE) build-version v=$(version)
 	@docker run -it --rm \
