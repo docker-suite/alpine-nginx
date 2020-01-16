@@ -98,16 +98,16 @@ Then you can hit `http://localhost:8080` or `http://host-ip:8080` in your browse
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Using your own conf files
 
 ```bash
-docker run --name some-nginx -v ./nginx.conf:/etc/nginx/nginx.conf:ro -d nginx
+docker run --name some-nginx -v ./nginx.conf:/etc/nginx/nginx.conf:ro -d dsuite/alpine-nginx:1.17
 ```
 ```bash
-docker run --name some-nginx -v ./site.conf:/etc/nginx/conf.d/site.conf:ro -d nginx
+docker run --name some-nginx -v ./site.conf:/etc/nginx/conf.d/site.conf:ro -d dsuite/alpine-nginx:1.17
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Local logs
 
 ```bash
-docker run --name some-nginx -v ./log:/var/log -d nginx
+docker run --name some-nginx -v ./log:/var/log -d dsuite/alpine-nginx:1.17
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Examples
