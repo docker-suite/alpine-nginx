@@ -2,22 +2,30 @@
 # MAIN SETTINGS
 # =================================================================================================
 
+# Defines user and group credentials used by worker processes.
+# If group is omitted, a group whose name equals that of user is used.
 user {{NGINX_USER}};
+
+#
 daemon off;
 
+# Defines the number of worker processes.
 worker_processes {{NGINX_WORKER_PROCESSES}};
 
+# Configures logging.
 error_log  /var/log/nginx/error.log warn;
+
+# Defines a file that will store the process ID of the main process.
 pid        /var/run/nginx.pid;
 
-
+# Sets the maximum number of simultaneous connections that can be opened by a worker process.
 events {
     worker_connections  {{NGINX_WORKER_CONNECTIONS}};
 }
 
 
 # =================================================================================================
-# HTTPS SETTINGS
+# HTTP SETTINGS
 # =================================================================================================
 
 http {
@@ -29,6 +37,7 @@ http {
     include       /etc/nginx/mime.types;
     default_type  application/octet-stream;
 
+    # Configures logging.
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
                       '$status $body_bytes_sent "$http_referer" '
                       '"$http_user_agent" "$http_x_forwarded_for"';
