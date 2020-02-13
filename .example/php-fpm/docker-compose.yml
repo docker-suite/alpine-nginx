@@ -19,7 +19,8 @@ services:
             - php
 
     php:
-        image: php:7.3-fpm-alpine
+        image: dsuite/alpine-php:7.4-fpm-dev
         container_name: php
         volumes:
             - ./www:/var/www
+            - ./log:/var/log
