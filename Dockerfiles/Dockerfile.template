@@ -1,9 +1,16 @@
 FROM nginx:{{NGINX_VERSION}}-alpine
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
-      description="A nginx official docker image built on top of alpine-runit container with runit process supervisor." \
-      vendor="docker-suite" \
-      license="MIT"
+    org.opencontainers.image.title="docker-suite dsuite/alpine-nginx image" \
+    org.opencontainers.image.description="A nginx official docker image built on top of alpine-runit container with runit process supervisor" \
+    org.opencontainers.image.authors="Hexosse <hexosse@gmail.com>" \
+    org.opencontainers.image.vendor="docker-suite" \
+    org.opencontainers.image.licenses="MIT" \
+    org.opencontainers.image.url="https://github.com/docker-suite/alpine-nginx" \
+    org.opencontainers.image.source="https://github.com/docker-suite/alpine-nginx" \
+    org.opencontainers.image.documentation="https://github.com/docker-suite/alpine-nginx/blob/master/Readme.md" \
+    org.opencontainers.image.created="{{DOCKER_IMAGE_CREATED}}" \
+    org.opencontainers.image.revision="{{DOCKER_IMAGE_REVISION}}"
 
 ## NGINX Config
 ENV NGINX_USER=nginx \
