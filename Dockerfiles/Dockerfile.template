@@ -1,7 +1,7 @@
 FROM nginx:{{NGINX_VERSION}}-alpine
 
 LABEL maintainer="Hexosse <hexosse@gmail.com>" \
-    org.opencontainers.image.title="docker-suite dsuite/alpine-nginx image" \
+    org.opencontainers.image.title="docker-suite dsuite/alpine-nginx:{{NGINX_VERSION}} image" \
     org.opencontainers.image.description="A nginx official docker image built on top of alpine-runit container with runit process supervisor" \
     org.opencontainers.image.authors="Hexosse <hexosse@gmail.com>" \
     org.opencontainers.image.vendor="docker-suite" \
