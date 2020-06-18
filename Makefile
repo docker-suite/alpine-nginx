@@ -7,7 +7,7 @@ DOCKER_IMAGE_REVISION=$(shell git rev-parse --short HEAD)
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define the latest version
-latest = 1.17
+latest = 1.18
 
 ## Config
 .DEFAULT_GOAL := help
@@ -20,16 +20,22 @@ help: ## Display this help!
 build: ## Build all versions
 	@$(MAKE) build-version v=1.16
 	@$(MAKE) build-version v=1.17
+	@$(MAKE) build-version v=1.18
+	@$(MAKE) build-version v=1.19
 
 test: ## Test all versions
 	@$(MAKE) test-version v=1.16
 	@$(MAKE) test-version v=1.17
+	@$(MAKE) test-version v=1.18
+	@$(MAKE) test-version v=1.19
 
 push: ## Push all versions
 	@$(MAKE) push-version v=1.16
 	@$(MAKE) push-version v=1.17
+	@$(MAKE) push-version v=1.18
+	@$(MAKE) push-version v=1.19
 
-shell: ## Run shell ( usage : make shell v="1.17" )
+shell: ## Run shell ( usage : make shell v="1.18" )
 	$(eval version := $(or $(v),$(latest)))
 	@$(MAKE) build-version v=$(version)
 	@docker run -it --rm \
