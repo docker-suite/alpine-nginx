@@ -5,5 +5,5 @@
 set -eu
 
 ## NGINX debug mode
-[ -n "$(env_get "NGINX_DEBUG")" ] && env_set "NGINX_DEBUG" "$(env_get "NGINX_DEBUG")" || true
+if [[ -n "$(env_get "NGINX_DEBUG")" ]]; then env_set "NGINX_DEBUG" "$(env_get "NGINX_DEBUG")"; fi
 

@@ -33,7 +33,8 @@ RUN \
     # Update repository indexes
     && apk update \
     # Download the install script and run it
-    && apk add curl \
+    && apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ \
+        curl \
     && curl -s -o /tmp/install-runit.sh https://raw.githubusercontent.com/docker-suite/Install-Scripts/master/alpine-runit/install-runit.sh \
     && sh /tmp/install-runit.sh \
     # remove default entrypoint provided by node image

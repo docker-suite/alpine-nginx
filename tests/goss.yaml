@@ -1,14 +1,14 @@
 group:
-  www-data:
+  nginx:
     exists: true
-    gid: 82
+    gid: 101
     skip: false
 
 user:
-  www-data:
+  nginx:
     exists: true
-    uid: 82
-    gid: 82
+    uid: 101
+    gid: 101
     groups:
-    - www-data
+    - nginx
     skip: false
