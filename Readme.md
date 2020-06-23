@@ -85,29 +85,29 @@ A full list of [dsuite/alpine-base environment variables][alpine-base-readme-var
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Hosting simple static content
 
 ```bash
-docker run --name some-nginx -v /some/content:/var/www:ro -d nginx
+docker run --name some-nginx -v /some/content:/var/www:ro -d dsuite/alpine-nginx
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Exposing external port
 
 ```bash
-docker run --name some-nginx -p 8080:80 -d nginx
+docker run --name some-nginx -p 8080:80 -d dsuite/alpine-nginx
 ```
 Then you can hit `http://localhost:8080` or `http://host-ip:8080` in your browser.
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Using your own conf files
 
 ```bash
-docker run --name some-nginx -v ./nginx.conf:/etc/nginx/nginx.conf:ro -d dsuite/alpine-nginx:1.17
+docker run --name some-nginx -v ./nginx.conf:/etc/nginx/nginx.conf:ro -d dsuite/alpine-nginx
 ```
 ```bash
-docker run --name some-nginx -v ./site.conf:/etc/nginx/conf.d/site.conf:ro -d dsuite/alpine-nginx:1.17
+docker run --name some-nginx -v ./site.conf:/etc/nginx/conf.d/site.conf:ro -d dsuite/alpine-nginx
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Local logs
 
 ```bash
-docker run --name some-nginx -v ./log:/var/log -d dsuite/alpine-nginx:1.17
+docker run --name some-nginx -v ./log:/var/log -d dsuite/alpine-nginx
 ```
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Examples
