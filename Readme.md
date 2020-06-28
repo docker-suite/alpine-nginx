@@ -41,12 +41,12 @@ A full list of [dsuite/alpine-base environment variables][alpine-base-readme-var
   <tr>
    <td><code>NGINX_SERVER_NAME</code></td>
    <td><code>localhost</code></td>
-   <td>server name defined in conf.d/default.con</td>
+   <td>server name defined in conf.d/default.conf</td>
   </tr>
   <tr>
    <td><code>NGINX_ROOT</code></td>
    <td><code>empty</code></td>
-   <td>server name defined in conf.d/default.con</td>
+   <td>server name defined in conf.d/default.conf</td>
   </tr>
   <tr>
    <td><code>PHP_FPM_ENABLE</code></td>
