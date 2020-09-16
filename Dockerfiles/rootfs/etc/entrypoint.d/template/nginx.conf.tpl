@@ -13,6 +13,7 @@ daemon off;
 worker_processes {{NGINX_WORKER_PROCESSES}};
 
 # Configures logging.
+error_log  /dev/stderr;
 error_log  /var/log/nginx/error.log warn;
 
 # Defines a file that will store the process ID of the main process.
@@ -21,6 +22,8 @@ pid        /var/run/nginx.pid;
 # Sets the maximum number of simultaneous connections that can be opened by a worker process.
 events {
     worker_connections  {{NGINX_WORKER_CONNECTIONS}};
+    multi_accept        on;
+    use                 epoll;
 }
 
 
@@ -62,9 +65,10 @@ http {
     # -------------------------------------------------------------------------------
 
     sendfile        on;
-    #tcp_nopush     on;
-    #aio            on;
-    #gzip           on;
+    tcp_nopush      on;
+    tcp_nodelay     on;
+    aio             on;
+    directio        512;
 
 
     # -------------------------------------------------------------------------------
@@ -82,6 +86,32 @@ http {
     # -------------------------------------------------------------------------------
 
     keepalive_timeout  65;
+
+
+    # -------------------------------------------------------------------------------
+    # GZIP COMPRESSION
+    # -------------------------------------------------------------------------------
+
+    gzip            on;
+    gzip_comp_level 2;
+    gzip_disable    msie6;
+    gzip_min_length 1024;
+    gzip_proxied    expired no-cache no-store private auth;
+    gzip_types      text/plain text/css text/xml text/javascript
+                    application/javascript application/x-javascript
+                    application/json application/xml;
+
+
+    # -------------------------------------------------------------------------------
+    # SSL PARAMETERS
+    # -------------------------------------------------------------------------------
+
+    ssl_protocols       TLSv1 TLSv1.1 TLSv1.2;
+    ssl_session_cache   shared:SSL:50m;
+    ssl_session_timeout 5m;
+
+    ssl_ciphers         "EECDH+AESGCM:EDH+AESGCM:AES256+EECDH:AES256+EDH !RC4";
+    ssl_prefer_server_ciphers   on;
 
 
     # -------------------------------------------------------------------------------
