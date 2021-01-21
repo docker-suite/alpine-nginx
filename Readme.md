@@ -7,7 +7,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-brightgreen.svg?style=flat-square)](https://opensource.org/licenses/MIT)
 [![dockeri.co](https://dockeri.co/image/dsuite/alpine-nginx)](https://hub.docker.com/r/dsuite/alpine-nginx)
 
-A nginx official docker image built on top of [docker-suite (dsuite)][docker-suite] [dsuite/alpine-runit][alpine-runit] container with [runit][runit] process supervisor.
+A nginx official docker image built on top of [docker-suite (dsuite)][docker-suite] [dsuite/alpine-base][alpine-base] container.
 
 ## ![](https://github.com/docker-suite/artwork/raw/master/various/pin/png/pin_16.png) Environment variables
 
@@ -118,6 +118,5 @@ For more example, look at the [.example](.example) folder.
 [runit]: http://smarden.org/runit/
 [docker-suite]: https://github.com/docker-suite/
 [alpine-base]: https://github.com/docker-suite/alpine-base/
-[alpine-runit]: https://github.com/docker-suite/alpine-runit/
 [alpine-base-readme]: https://github.com/docker-suite/alpine-base/blob/master/Readme.md/
 [alpine-base-readme-variables]: https://github.com/docker-suite/alpine-base/blob/master/Readme.md#-environment-variables

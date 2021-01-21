@@ -7,7 +7,7 @@ DOCKER_IMAGE_REVISION=$(shell git rev-parse --short HEAD)
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define the latest version
-latest = 1.18
+latest = 1.19
 
 ## Config
 .DEFAULT_GOAL := help
@@ -17,18 +17,27 @@ help: ## Display this help!
 	@printf "\n\033[33mUsage:\033[0m\n  make \033[32m<target>\033[0m \033[36m[\033[0marg=\"val\"...\033[36m]\033[0m\n\n\033[33mTargets:\033[0m\n"
 	@awk 'BEGIN {FS = ":.*##"} /^[a-zA-Z_-]+:.*?##/ { printf "  \033[32m%-15s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
-all: ## Build all supported versions
+build-all: ## Build all supported versions
 	@$(MAKE) build v=1.16
 	@$(MAKE) build v=1.17
 	@$(MAKE) build v=1.18
 	@$(MAKE) build v=1.19
 
-build: ## Build ( usage : make build v=1.18 )
+test-all: ## Build all supported versions
+	@$(MAKE) test v=1.16
+	@$(MAKE) test v=1.17
+	@$(MAKE) test v=1.18
+	@$(MAKE) test v=1.19
+
+push-all: ## Push all supported versions
+	@$(MAKE) push v=1.16
+	@$(MAKE) push v=1.17
+	@$(MAKE) push v=1.18
+	@$(MAKE) push v=1.19
+
+build: ## Build ( usage : make build v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
 	@docker run --rm \
-		-e http_proxy=${http_proxy} \
-		-e https_proxy=${https_proxy} \
-		-e no_proxy=${no_proxy} \
 		-e NGINX_VERSION=$(version) \
 		-e DOCKER_IMAGE_CREATED=$(DOCKER_IMAGE_CREATED) \
 		-e DOCKER_IMAGE_REVISION=$(DOCKER_IMAGE_REVISION) \
@@ -36,37 +45,28 @@ build: ## Build ( usage : make build v=1.18 )
 		dsuite/alpine-data \
 		sh -c "templater Dockerfile.template > Dockerfile-$(version)"
 	@docker build --force-rm \
-		--build-arg http_proxy=${http_proxy} \
-		--build-arg https_proxy=${https_proxy} \
-		--build-arg no_proxy=${no_proxy} \
 		--build-arg GH_TOKEN=${GH_TOKEN} \
 		--file $(DIR)/Dockerfiles/Dockerfile-$(version) \
 		--tag $(DOCKER_IMAGE):$(version) \
 		$(DIR)/Dockerfiles
 	@[ "$(version)" = "$(latest)" ] && docker tag $(DOCKER_IMAGE):$(version) $(DOCKER_IMAGE):latest || true
 
-test: ## Test ( usage : make test v=1.18 )
+test: ## Test ( usage : make test v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build v=$(version)
 	@docker run --rm -t \
-		-e http_proxy=${http_proxy} \
-		-e https_proxy=${https_proxy} \
-		-e no_proxy=${no_proxy} \
 		-v $(DIR)/tests:/goss \
 		-v /tmp:/tmp \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		dsuite/goss:latest \
 		dgoss run --entrypoint=/goss/entrypoint.sh $(DOCKER_IMAGE):$(version)
 
-push: ## Push ( usage : make push v=1.18 )
+push: ## Push ( usage : make push v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build v=$(version)
 	@docker push $(DOCKER_IMAGE):$(version)
 	@[ "$(version)" = "$(latest)" ] && docker push $(DOCKER_IMAGE):latest || true
 
-shell: ## Run shell ( usage : make shell v=1.18 )
+shell: ## Run shell ( usage : make shell v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
-	@$(MAKE) build v=$(version)
 	@docker run -it --rm \
 		-e http_proxy=${http_proxy} \
 		-e https_proxy=${https_proxy} \

@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
     nginx:
-        image: dsuite/alpine-nginx:1.18
+        image: dsuite/alpine-nginx:1.19
         container_name: nginx
         environment:
             - DEBUG_LEVEL=DEBUG
