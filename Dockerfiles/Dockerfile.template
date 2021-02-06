@@ -53,7 +53,8 @@ RUN \
 COPY /rootfs /
 
 ## Make entrypoint executable
-RUN chmod +x /entrypoint.sh
+RUN chmod +x /entrypoint.sh \
+    && chmod +x /nginx-entrypoint.sh
 
 ## Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

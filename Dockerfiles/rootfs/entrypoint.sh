@@ -31,4 +31,4 @@ execute_scripts "/startup.2.d"
 
 
 ### Execute default nginx entrypoint
-source /docker-entrypoint.sh
+source /nginx-entrypoint.sh
