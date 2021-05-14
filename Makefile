@@ -22,18 +22,21 @@ build-all: ## Build all supported versions
 	@$(MAKE) build v=1.17
 	@$(MAKE) build v=1.18
 	@$(MAKE) build v=1.19
+	@$(MAKE) build v=1.20
 
 test-all: ## Build all supported versions
 	@$(MAKE) test v=1.16
 	@$(MAKE) test v=1.17
 	@$(MAKE) test v=1.18
 	@$(MAKE) test v=1.19
+	@$(MAKE) test v=1.20
 
 push-all: ## Push all supported versions
 	@$(MAKE) push v=1.16
 	@$(MAKE) push v=1.17
 	@$(MAKE) push v=1.18
 	@$(MAKE) push v=1.19
+	@$(MAKE) push v=1.20
 
 build: ## Build ( usage : make build v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
@@ -53,12 +56,9 @@ build: ## Build ( usage : make build v=1.19 )
 
 test: ## Test ( usage : make test v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
-	@docker run --rm -t \
-		-v $(DIR)/tests:/goss \
-		-v /tmp:/tmp \
-		-v /var/run/docker.sock:/var/run/docker.sock \
-		dsuite/goss:latest \
-		dgoss run --entrypoint=/goss/entrypoint.sh $(DOCKER_IMAGE):$(version)
+	@GOSS_FILES_PATH=$(DIR)/tests \
+	GOSS_SLEEP=0.5 \
+	 	dgoss run $(DOCKER_IMAGE):$(version)
 
 push: ## Push ( usage : make push v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
@@ -67,10 +67,8 @@ push: ## Push ( usage : make push v=1.19 )
 
 shell: ## Run shell ( usage : make shell v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
-	@docker run -it --rm \
-		-e http_proxy=${http_proxy} \
-		-e https_proxy=${https_proxy} \
-		-e no_proxy=${no_proxy} \
+	@$(MAKE) build v=$(version)
+	@docker run -it --rm --init \
 		-e DEBUG_LEVEL=DEBUG \
 		$(DOCKER_IMAGE):$(version) \
 		bash
@@ -81,9 +79,6 @@ remove: ## Remove all generated images
 
 readme: ## Generate docker hub full description
 	@docker run -t --rm \
-		-e http_proxy=${http_proxy} \
-		-e https_proxy=${https_proxy} \
-		-e no_proxy=${no_proxy} \
 		-e DOCKER_USERNAME=${DOCKER_USERNAME} \
 		-e DOCKER_PASSWORD=${DOCKER_PASSWORD} \
 		-e DOCKER_IMAGE=${DOCKER_IMAGE} \

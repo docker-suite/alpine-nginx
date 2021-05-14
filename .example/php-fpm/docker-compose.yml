@@ -1,9 +1,9 @@
-version: '3.8'
+version: "3.8"
 
 services:
 
     nginx:
-        image: dsuite/alpine-nginx:1.19
+        image: dsuite/alpine-nginx:latest
         container_name: nginx
         environment:
             - DEBUG_LEVEL=DEBUG

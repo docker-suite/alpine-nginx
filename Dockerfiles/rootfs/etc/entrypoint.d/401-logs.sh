@@ -28,6 +28,6 @@ if [[ ! -f "${log_dir}/${log_error}" ]]; then
     touch ${log_dir}/${log_error}
 fi
 
-# Update permissions
+# Update ownership and permissions
 chown -R ${NGINX_USER}:${NGINX_USER} ${log_dir}
 chmod 0755 ${log_dir}

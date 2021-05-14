@@ -1,3 +1,31 @@
+file:
+  /entrypoint.sh:
+    exists: true
+    mode: "0755"
+    filetype: file
+  /nginx-entrypoint.sh:
+    exists: true
+    mode: "0755"
+    filetype: file
+  /var/log/nginx:
+    exists: true
+    mode: "0755"
+    filetype: directory
+  /var/log/nginx/access.log:
+    exists: true
+    mode: "0777"
+    filetype: symlink
+  /var/log/nginx/error.log:
+    exists: true
+    mode: "0777"
+    filetype: symlink
+  /etc/nginx/nginx.conf:
+    exists: true
+    filetype: file
+  /etc/nginx/conf.d/default.conf:
+    exists: true
+    filetype: file
+
 group:
   nginx:
     exists: true
