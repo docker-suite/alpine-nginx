@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
 
@@ -22,5 +22,5 @@ services:
         image: dsuite/alpine-php:7.4-fpm-dev
         container_name: php
         volumes:
-            - ./www:/var/www
+            - ./www:/var/www:ro
             - ./log:/var/log

@@ -30,6 +30,17 @@ ENV NGINX_USER=nginx \
     PHP_FPM_HOST=localhost \
     PHP_FPM_PORT=9000
 
+# Ensure www-data user exists
+# 82 is the standard uid/gid for "www-data" in Alpine
+RUN \
+	# Print executed commands
+	set -x \
+    # Create www-data user
+    # (www-data group already exist in alpine)
+    && adduser -u 82 -S -D -s /sbin/nologin -G www-data -g www-data www-data 2>/dev/null \
+    # Add nginx user as member of www-data
+    && adduser $NGINX_USER www-data 2>/dev/null
+
 ## Install alpine-base
 RUN \
 	# Print executed commands
@@ -50,7 +61,7 @@ RUN \
     && rm -f /etc/nginx/nginx.conf
 
 ## Copy folders
-COPY /rootfs /
+COPY rootfs /
 
 # Make entrypoint script accessible and executable
 RUN chmod 0755 /entrypoint.sh \

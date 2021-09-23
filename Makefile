@@ -7,7 +7,7 @@ DOCKER_IMAGE_REVISION=$(shell git rev-parse --short HEAD)
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define the latest version
-latest = 1.19
+latest = 1.21
 
 ## Config
 .DEFAULT_GOAL := help
@@ -23,6 +23,7 @@ build-all: ## Build all supported versions
 	@$(MAKE) build v=1.18
 	@$(MAKE) build v=1.19
 	@$(MAKE) build v=1.20
+	@$(MAKE) build v=1.21
 
 test-all: ## Build all supported versions
 	@$(MAKE) test v=1.16
@@ -30,6 +31,7 @@ test-all: ## Build all supported versions
 	@$(MAKE) test v=1.18
 	@$(MAKE) test v=1.19
 	@$(MAKE) test v=1.20
+	@$(MAKE) test v=1.21
 
 push-all: ## Push all supported versions
 	@$(MAKE) push v=1.16
@@ -37,6 +39,7 @@ push-all: ## Push all supported versions
 	@$(MAKE) push v=1.18
 	@$(MAKE) push v=1.19
 	@$(MAKE) push v=1.20
+	@$(MAKE) push v=1.21
 
 build: ## Build ( usage : make build v=1.19 )
 	$(eval version := $(or $(v),$(latest)))
