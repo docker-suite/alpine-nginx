@@ -1,3 +1,6 @@
 Dockerfile-*
 **/log/*
 !**/log/.gitkeep
+
+.dccache
+**/configurationCache.log
