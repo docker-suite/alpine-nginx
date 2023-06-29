@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # shellcheck disable=SC1090
 
 ###
@@ -21,14 +21,21 @@ done
 ###
 ### Source custom user supplied libs in /startup.d
 ###
+DEBUG "Sourcing scripts in /startup.d"
 source_scripts "/startup.d"
 
 ###
 ### Run custom user supplied scripts
 ###
+DEBUG "Executing scripts in /startup.1.d"
 execute_scripts "/startup.1.d"
+DEBUG "Executing scripts in /startup.2.d"
 execute_scripts "/startup.2.d"
 
-
-### Execute default nginx entrypoint
-source /nginx-entrypoint.sh
+### Execute default nginx entrypoint if it exist
+if [ -e "/docker-entrypoint.sh" ]; then
+    DEBUG "Executing nginx entrypoint"
+    source /docker-entrypoint.sh
+else
+exec "$@"
+fi

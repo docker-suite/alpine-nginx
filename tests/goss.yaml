@@ -3,10 +3,6 @@ file:
     exists: true
     mode: "0755"
     filetype: file
-  /nginx-entrypoint.sh:
-    exists: true
-    mode: "0755"
-    filetype: file
   /var/log/nginx:
     exists: true
     mode: "0755"

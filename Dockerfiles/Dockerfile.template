@@ -64,8 +64,7 @@ RUN \
 COPY rootfs /
 
 # Make entrypoint script accessible and executable
-RUN chmod 0755 /entrypoint.sh \
-    && chmod 0755 /nginx-entrypoint.sh
+RUN chmod 0755 /entrypoint.sh
 
 ## Entrypoint
 ENTRYPOINT ["/entrypoint.sh"]

@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # set -e : Exit the script if any statement returns a non-true return value.
 # set -u : Exit the script when using uninitialised variable.
@@ -29,5 +29,5 @@ if [[ ! -f "${log_dir}/${log_error}" ]]; then
 fi
 
 # Update ownership and permissions
-chown -R ${NGINX_USER}:${NGINX_USER} ${log_dir}
+chown -R "${NGINX_USER}":"${NGINX_USER}" ${log_dir}
 chmod 0755 ${log_dir}

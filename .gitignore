@@ -4,3 +4,6 @@ Dockerfile-*
 
 .dccache
 **/configurationCache.log
+
+
+.env

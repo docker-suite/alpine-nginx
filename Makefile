@@ -7,7 +7,7 @@ DOCKER_IMAGE_REVISION=$(shell git rev-parse --short HEAD)
 DIR:=$(strip $(shell dirname $(realpath $(lastword $(MAKEFILE_LIST)))))
 
 ## Define the latest version
-latest = 1.23
+latest = 1.25
 
 ## Config
 .DEFAULT_GOAL := help
@@ -26,6 +26,8 @@ build-all: ## Build all supported versions
 	@$(MAKE) build v=1.21
 	@$(MAKE) build v=1.22
 	@$(MAKE) build v=1.23
+	@$(MAKE) build v=1.24
+	@$(MAKE) build v=1.25
 
 test-all: ## Build all supported versions
 	@$(MAKE) test v=1.16
@@ -36,6 +38,8 @@ test-all: ## Build all supported versions
 	@$(MAKE) test v=1.21
 	@$(MAKE) test v=1.22
 	@$(MAKE) test v=1.23
+	@$(MAKE) test v=1.24
+	@$(MAKE) test v=1.25
 
 push-all: ## Push all supported versions
 	@$(MAKE) push v=1.16
@@ -46,8 +50,10 @@ push-all: ## Push all supported versions
 	@$(MAKE) push v=1.21
 	@$(MAKE) push v=1.22
 	@$(MAKE) push v=1.23
+	@$(MAKE) push v=1.24
+	@$(MAKE) push v=1.25
 
-build: ## Build ( usage : make build v=1.23 )
+build: ## Build ( usage : make build v=1.25 )
 	$(eval version := $(or $(v),$(latest)))
 	@docker run --rm \
 		-e NGINX_VERSION=$(version) \
@@ -63,18 +69,18 @@ build: ## Build ( usage : make build v=1.23 )
 		$(DIR)/Dockerfiles
 	@[ "$(version)" = "$(latest)" ] && docker tag $(DOCKER_IMAGE):$(version) $(DOCKER_IMAGE):latest || true
 
-test: ## Test ( usage : make test v=1.23 )
+test: ## Test ( usage : make test v=1.25 )
 	$(eval version := $(or $(v),$(latest)))
 	@GOSS_FILES_PATH=$(DIR)/tests \
 	GOSS_SLEEP=0.5 \
 	 	dgoss run $(DOCKER_IMAGE):$(version)
 
-push: ## Push ( usage : make push v=1.23 )
+push: ## Push ( usage : make push v=1.25 )
 	$(eval version := $(or $(v),$(latest)))
 	@docker push $(DOCKER_IMAGE):$(version)
 	@[ "$(version)" = "$(latest)" ] && docker push $(DOCKER_IMAGE):latest || true
 
-shell: ## Run shell ( usage : make shell v=1.23 )
+shell: ## Run shell ( usage : make shell v=1.25 )
 	$(eval version := $(or $(v),$(latest)))
 	@$(MAKE) build v=$(version)
 	@docker run -it --rm --init \
